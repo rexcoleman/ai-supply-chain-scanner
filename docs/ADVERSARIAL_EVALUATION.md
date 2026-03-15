@@ -68,6 +68,45 @@ The threat model MUST be defined before any adversarial evaluation begins. It co
 | **Perturbation budget (ε)** | {{EPSILON_VALUES}} |
 | **Attack surface** | *(test-time inputs / training data / reward signal / environment dynamics)* |
 
+### 2b) Formal Threat Model (YAML)
+
+```yaml
+threat_model:
+  adversary_knowledge: white_box  # Attacker knows scanner rules (open source)
+  adversary_capability:
+    perturbation_type: code_obfuscation  # Disguise malicious patterns
+    perturbation_budget:
+      norm: semantic
+      epsilon: "Any code transformation that preserves functionality"
+    access:
+      - source_code  # Attacker controls the malicious code
+      - package_metadata  # Can set any package name, version
+    constraints:
+      - "Cannot modify scanner rules (defender controls)"
+      - "Cannot modify detection signatures"
+  adversary_goal: evasion  # Bypass scanner detection
+  attack_surface:
+    controllable_features: [code_patterns, import_names, function_calls, package_metadata]
+    observable_features: [file_extensions, directory_structure]
+    system_features: [scanner_rules, detection_signatures]
+  attacks_tested:
+    - type: controllability_analysis
+      sophistication: low
+      tool: manual classification of findings by controllability
+  attacks_NOT_tested:
+    - type: code_obfuscation
+      reason: "Scanner uses simple pattern matching; obfuscated pickle.load (e.g., getattr(pickle, 'load')) would bypass"
+    - type: novel_deserialization
+      reason: "Scanner checks known patterns; novel unsafe deserialization methods not covered"
+    - type: model_weight_backdoor
+      reason: "Scanner doesn't analyze model weight contents, only file format"
+  limitation_acknowledgment: |
+    Scanner is rule-based (not ML). A white-box attacker who knows the patterns can
+    trivially bypass detection via code obfuscation. This is a fundamental limitation
+    of static analysis. The scanner catches common, unobfuscated risks — it is not
+    robust against determined adversaries.
+```
+
 **Rule:** The threat model MUST be documented in the report Methods section before adversarial experiments run.
 
 **Verification:** Report Methods section contains a threat model paragraph specifying all properties above. `config_resolved.yaml` records `threat_model`, `perturbation_norm`, and `epsilon` for every adversarial run.
