@@ -8,7 +8,18 @@
 
 ## Executive Summary
 
-We built an open-source AI supply chain security scanner and tested it on 5 real ML projects + 2 Hugging Face models. The scanner found **20 findings across 5 projects**, including **13 CRITICAL severity** — primarily unsafe pickle/joblib serialization (arbitrary code execution risk) and known CVEs in ML libraries (LangChain, PyTorch). Traditional dependency scanners (Snyk, Dependabot) miss 4 of our 7 risk categories because they don't cover ML-specific risks: model provenance, unsafe serialization formats, untrusted model sources, and deprecated ML algorithms.
+We built an open-source AI supply chain security scanner using rule-based pattern matching and static analysis (not machine learning) and tested it on 5 real ML projects + 2 Hugging Face models. The scanner found **20 findings across 5 projects** [DEMONSTRATED], including **13 CRITICAL severity** [DEMONSTRATED] — primarily unsafe pickle/joblib serialization (arbitrary code execution risk) and known CVEs in ML libraries (LangChain, PyTorch). Traditional dependency scanners (Snyk, Dependabot) miss 4 of our 7 risk categories because they don't cover ML-specific risks: model provenance, unsafe serialization formats, untrusted model sources, and deprecated ML algorithms.
+
+---
+
+## Claim Strength Legend
+
+| Tag | Meaning |
+|-----|---------|
+| [DEMONSTRATED] | Directly measured, multi-seed, CI reported, raw data matches |
+| [SUGGESTED] | Consistent pattern but limited evidence (1-2 seeds, qualitative) |
+| [PROJECTED] | Extrapolated from partial evidence |
+| [HYPOTHESIZED] | Untested prediction |
 
 ---
 
@@ -26,7 +37,7 @@ We built an open-source AI supply chain security scanner and tested it on 5 real
 | Stale Dependencies | Yes (Dependabot) | 0 |
 | **Deprecated Algorithms** | **No** | 0 (none found in test set) |
 
-**Key finding: Unsafe serialization is the #1 risk.** 10 of 20 findings (50%) are pickle/joblib usage that allows arbitrary code execution on model load. This is the ML equivalent of SQL injection — well-known, trivially exploitable, and everywhere.
+**Key finding: Unsafe serialization is the #1 risk [DEMONSTRATED].** 10 of 20 findings (50%) are pickle/joblib usage that allows arbitrary code execution on model load. This is the ML equivalent of SQL injection — well-known, trivially exploitable, and everywhere.
 
 ---
 
@@ -34,10 +45,10 @@ We built an open-source AI supply chain security scanner and tested it on 5 real
 
 | Severity | Count | % |
 |----------|-------|---|
-| CRITICAL | 13 | 65% |
-| HIGH | 2 | 10% |
-| MEDIUM | 4 | 20% |
-| LOW | 1 | 5% |
+| CRITICAL | 13 | 65% [DEMONSTRATED] |
+| HIGH | 2 | 10% [DEMONSTRATED] |
+| MEDIUM | 4 | 20% [DEMONSTRATED] |
+| LOW | 1 | 5% [DEMONSTRATED] |
 
 65% of findings are CRITICAL — dominated by unsafe serialization. ML projects have a worse security posture than traditional software because the ecosystem normalized pickle serialization before safetensors existed.
 
@@ -47,11 +58,11 @@ We built an open-source AI supply chain security scanner and tested it on 5 real
 
 | Controllability | Count | % | Can You Fix It? |
 |----------------|-------|---|-----------------|
-| Developer | 15 | 75% | Yes — change your code |
-| Model | 4 | 20% | Partial — choose a safer model |
-| Platform | 1 | 5% | No — report to Hugging Face |
+| Developer | 15 | 75% [DEMONSTRATED] | Yes — change your code |
+| Model | 4 | 20% [DEMONSTRATED] | Partial — choose a safer model |
+| Platform | 1 | 5% [DEMONSTRATED] | No — report to Hugging Face |
 
-**75% of supply chain risks are developer-controlled.** Unlike crypto migration (FP-03, 70% library-controlled), ML supply chain risks are mostly in YOUR code. The fix is straightforward: replace `pickle.load` with `safetensors`, update `torch.load` to use `weights_only=True`, pin ML library versions.
+**75% of supply chain risks are developer-controlled** [DEMONSTRATED]. Unlike crypto migration (FP-03, 70% library-controlled), ML supply chain risks are mostly in YOUR code. The fix is straightforward: replace `pickle.load` with `safetensors`, update `torch.load` to use `weights_only=True`, pin ML library versions.
 
 **Cross-domain controllability analysis (6 domains):**
 
@@ -87,6 +98,8 @@ We built an open-source AI supply chain security scanner and tested it on 5 real
 
 | Artifact | Path |
 |----------|------|
+**Note:** This scanner uses rule-based pattern matching and static analysis, not machine learning. It is positioned in the portfolio as a security tool FOR AI/ML projects, applying adversarial control analysis to categorize supply chain risks by controllability, but the detection methodology itself is deterministic.
+
 | Scan reports (5 projects) | `outputs/*_scan.json` |
 | CLI tool | `src/cli.py` |
 | Risk categories | `src/core/risk_categories.py` |

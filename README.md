@@ -2,6 +2,8 @@
 
 **The Snyk for AI models. Scan ML project dependencies and Hugging Face models for supply chain risks that traditional scanners miss.**
 
+> **Note:** This scanner uses rule-based pattern matching and static analysis, not machine learning. It is a security tool FOR AI/ML projects, applying adversarial control analysis to categorize supply chain risks by controllability, but the detection methodology itself is deterministic.
+
 ## Key Results
 
 | Metric | Value |
