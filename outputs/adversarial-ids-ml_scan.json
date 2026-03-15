@@ -1,0 +1,88 @@
+{
+  "scan_type": "dependency",
+  "project": "/home/azureuser/adversarial-ids-ml",
+  "packages_scanned": 21,
+  "total_findings": 9,
+  "by_severity": {
+    "critical": 7,
+    "medium": 2
+  },
+  "by_category": {
+    "serialization_risk": 6,
+    "known_ml_cve": 3
+  },
+  "findings": [
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "train_baselines.py:11",
+      "description": "Unsafe serialization: \\.pkl\\b found",
+      "cve_id": null
+    },
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "train_baselines.py:216",
+      "description": "Unsafe serialization: \\.pkl\\b found",
+      "cve_id": null
+    },
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "adversarial_attacks.py:53",
+      "description": "Unsafe serialization: \\.pkl\\b found",
+      "cve_id": null
+    },
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "adversarial_attacks.py:56",
+      "description": "Unsafe serialization: joblib\\.load found",
+      "cve_id": null
+    },
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "defenses.py:165",
+      "description": "Unsafe serialization: joblib\\.load found",
+      "cve_id": null
+    },
+    {
+      "category": "serialization_risk",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "defenses.py:165",
+      "description": "Unsafe serialization: \\.pkl\\b found",
+      "cve_id": null
+    },
+    {
+      "category": "known_ml_cve",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "torch",
+      "description": "Arbitrary code execution via torch.load without weights_only=True",
+      "cve_id": "CVE-2024-5480"
+    },
+    {
+      "category": "known_ml_cve",
+      "severity": "medium",
+      "controllability": "developer",
+      "component": "numpy",
+      "description": "Buffer overflow in numpy array operations",
+      "cve_id": "CVE-2021-41496"
+    },
+    {
+      "category": "known_ml_cve",
+      "severity": "medium",
+      "controllability": "developer",
+      "component": "scikit_learn",
+      "description": "Deserialization vulnerability in sklearn model loading",
+      "cve_id": "CVE-2020-28975"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "scan_type": "dependency",
+  "project": "/home/azureuser/financial-anomaly-detection",
+  "packages_scanned": 0,
+  "total_findings": 0,
+  "by_severity": {},
+  "by_category": {},
+  "findings": []
+}

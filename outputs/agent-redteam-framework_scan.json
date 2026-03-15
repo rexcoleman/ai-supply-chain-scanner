@@ -1,0 +1,22 @@
+{
+  "scan_type": "dependency",
+  "project": "/home/azureuser/agent-redteam-framework",
+  "packages_scanned": 25,
+  "total_findings": 1,
+  "by_severity": {
+    "critical": 1
+  },
+  "by_category": {
+    "known_ml_cve": 1
+  },
+  "findings": [
+    {
+      "category": "known_ml_cve",
+      "severity": "critical",
+      "controllability": "developer",
+      "component": "langchain",
+      "description": "Arbitrary code execution via LLM-generated Python code",
+      "cve_id": "CVE-2023-29374"
+    }
+  ]
+}

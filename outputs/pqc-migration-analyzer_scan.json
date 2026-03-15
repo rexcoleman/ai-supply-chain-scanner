@@ -1,0 +1,30 @@
+{
+  "scan_type": "dependency",
+  "project": "/home/azureuser/pqc-migration-analyzer",
+  "packages_scanned": 15,
+  "total_findings": 2,
+  "by_severity": {
+    "medium": 2
+  },
+  "by_category": {
+    "known_ml_cve": 2
+  },
+  "findings": [
+    {
+      "category": "known_ml_cve",
+      "severity": "medium",
+      "controllability": "developer",
+      "component": "numpy",
+      "description": "Buffer overflow in numpy array operations",
+      "cve_id": "CVE-2021-41496"
+    },
+    {
+      "category": "known_ml_cve",
+      "severity": "medium",
+      "controllability": "developer",
+      "component": "scikit_learn",
+      "description": "Deserialization vulnerability in sklearn model loading",
+      "cve_id": "CVE-2020-28975"
+    }
+  ]
+}

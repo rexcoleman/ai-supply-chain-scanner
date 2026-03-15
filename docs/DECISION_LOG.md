@@ -28,7 +28,7 @@
 
 ## Purpose
 
-This log records architectural and methodological decisions for the **{{PROJECT_NAME}}** project using a lightweight ADR (Architecture Decision Record) format. Each decision captures the context, alternatives, rationale, and consequences so that future changes are informed rather than accidental.
+This log records architectural and methodological decisions for the **AI Supply Chain Security Scanner** project using a lightweight ADR (Architecture Decision Record) format. Each decision captures the context, alternatives, rationale, and consequences so that future changes are informed rather than accidental.
 
 **Relationship to CHANGELOG:** When a decision triggers a `CONTRACT_CHANGE` commit, the change MUST also be logged in CHANGELOG with a cross-reference to the ADR ID.
 
@@ -110,38 +110,39 @@ Copy this block for each new decision:
 
 ---
 
-## ADR-0001: [First decision title]
+## ADR-0001: Two scan surfaces (dependencies + models) with shared risk taxonomy
 
-- **Date:** YYYY-MM-DD
-- **Status:** Proposed
-
-### Context
-*(Describe the problem and constraints. Cite authority documents by tier and section.)*
+- **Date:** 2026-03-15
+- **Status:** Accepted
 
 ### Decision
-*(State the chosen approach with enough specificity to implement.)*
-
-### Alternatives Considered
-
-| Option | Description | Verdict | Reason |
-|--------|-------------|---------|--------|
-| A (chosen) | *(approach)* | **Accepted** | *(why best)* |
-| B | *(approach)* | Rejected | *(why not)* |
+Scanner has two entry points: `check --repo` (dependencies) and `model --id` (Hugging Face models). Both use the same 7-category risk taxonomy and produce the same RiskFinding output format.
 
 ### Rationale
-*(Why this is the best choice given project constraints.)*
+ML supply chain risks span two distinct surfaces — what you install (packages) and what you download (models). A unified risk taxonomy makes findings comparable and aggregatable across both surfaces. The FP-03 PQC scanner pattern (detection → risk scoring → CLI output) transfers directly.
 
-### Consequences
-*(Tradeoffs, risks, downstream effects. Reference RISK_REGISTER entries.)*
+---
 
-### Contracts Affected
+## ADR-0002: Curated CVE list instead of full NVD matching
 
-| Contract | Section | Change Required |
-|----------|---------|----------------|
-| *(contract)* | §N | *(what changes)* |
+- **Date:** 2026-03-15
+- **Status:** Accepted
 
-### Evidence Plan
+### Decision
+Use a curated list of 10 high-profile ML-specific CVEs rather than matching against the full NVD. Full NVD matching is a stretch goal.
 
-| Validation | Command / Artifact | Expected Result |
-|------------|-------------------|-----------------|
-| *(what to verify)* | *(command or file)* | *(pass criteria)* |
+### Rationale
+The curated list covers the most impactful ML CVEs (LangChain RCE, PyTorch deserialization, TensorFlow DoS, MLflow RCE, Ray RCE). Full NVD matching adds complexity (338K CVEs × package name matching) for diminishing returns — most critical ML CVEs are in the curated list. FP-05 NVD data is available for the stretch goal.
+
+---
+
+## ADR-0003: Scan own projects first for validation
+
+- **Date:** 2026-03-15
+- **Status:** Accepted
+
+### Decision
+Validated the scanner on 5 own ML projects before scanning public repos. This produced real findings (20 across 5 projects) and proved the scanner works on actual ML codebases, not synthetic test fixtures.
+
+### Rationale
+Scanning your own code first is more honest than scanning stranger repos. The blog post angle "I scanned my own projects and found 13 CRITICAL" is more compelling and credible than "I scanned random repos." Also, this is the "builder-in-public" pillar — transparency about your own security posture.
