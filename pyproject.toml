@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "ai-supply-scan"
+version = "0.1.0"
+description = "Scan AI/ML dependencies and models for supply chain security risks"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [{name = "Rex Coleman"}]
+keywords = ["ai", "security", "machine-learning"]
+
+[project.urls]
+Homepage = "https://github.com/rexcoleman/ai-supply-chain-scanner"
+Repository = "https://github.com/rexcoleman/ai-supply-chain-scanner"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
