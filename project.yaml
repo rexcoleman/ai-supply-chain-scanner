@@ -1,0 +1,125 @@
+# project.yaml — AI Supply Chain Security Scanner (FP-10)
+#
+# Scans AI/ML project dependencies for security risks: malicious model weights,
+# poisoned datasets, compromised training pipelines, untrusted open-source models.
+# "Snyk for AI models."
+
+project:
+  name: "AI Supply Chain Security Scanner"
+  profile: blog-track
+  python_version: "3.11"
+  conda_env: "ai-supply-scan"
+
+authority:
+  tier1: "docs/PROJECT_BRIEF.md"
+  tier2: null
+  tier3: "docs/ADVERSARIAL_EVALUATION.md"
+
+publication:
+  title: "I Built the Snyk for AI Models: Here's What Your ML Pipeline Is Hiding"
+  pillar: "AI Security Architecture"
+  venue: "blog"
+  conference_cfp: "BSides / DEF CON AI Village / Black Hat Arsenal"
+  target_date: "2026-06-01"
+
+skill_clusters:
+  L: { current: "L4-adj", target: "L4", how: "NLP on model cards + dependency graph analysis" }
+  S: { current: "S3", target: "S4", how: "Automated AI security tool shipped and used by others" }
+  P: { current: "P3-adj", target: "P4", how: "CLI tool with GitHub Actions integration, real users" }
+  D: { current: "D4", target: "D4+", how: "Supply chain threat model tradeoff documentation" }
+  V: { current: "V1", target: "V2+", how: "Highest-virality topic: everyone uses Hugging Face" }
+
+infrastructure:
+  workload_type: "io_bound"
+  min_disk_gb: 3
+  min_ram_gb: 4
+  min_cores: 2
+  api_budget_usd: 5
+  data_disk: "/data"
+
+experiments:
+  seeds: [42, 123, 456]
+  parts:
+    - name: model_scanning
+      methods: [metadata_scanner, weight_hash_verifier, provenance_checker]
+      datasets: [huggingface_models]
+      script: "scripts/run_model_scan.py"
+      output_dir: "outputs/model_scan"
+    - name: dependency_scanning
+      methods: [pip_audit, cve_matcher, license_checker]
+      datasets: [pypi_packages]
+      script: "scripts/run_dependency_scan.py"
+      output_dir: "outputs/dependency_scan"
+    - name: risk_scoring
+      methods: [rule_based, ml_scorer]
+      datasets: [nvd_ml_cves]
+      script: "scripts/run_risk_scoring.py"
+      output_dir: "outputs/risk_scoring"
+
+datasets:
+  - name: huggingface_models
+    source: "Hugging Face Hub API"
+    download_method: "api"
+    known_issues:
+      - "Rate limits on Hub API"
+      - "Model cards vary in quality/completeness"
+      - "Weight file sizes can be >10GB — scan metadata only, not weights"
+    local_path: "data/raw/hf_models/"
+  - name: pypi_packages
+    source: "PyPI JSON API + pip audit"
+    download_method: "api"
+    local_path: "data/raw/pypi/"
+  - name: nvd_ml_cves
+    source: "NVD API — ML/AI library CVEs (reuse FP-05 data)"
+    download_method: "filter"
+    known_issues:
+      - "Reuse FP-05 NVD data, filter for ML library keywords"
+    local_path: "data/processed/"
+
+config:
+  base: "config/base.yaml"
+  layers:
+    - pattern: "config/scanners/*.yaml"
+  resolved_output: "config_resolved.yaml"
+
+phases:
+  - name: "Phase 0 — Environment & Data"
+    checks:
+      - command: "bash scripts/verify_env.sh"
+        description: "Environment verified"
+      - command: "git remote -v"
+        description: "Git remote configured"
+  - name: "Phase 1 — Scanner Engine"
+    checks:
+      - command: "python scripts/run_model_scan.py --dry-run"
+        description: "Model scanner dry-run passes"
+  - name: "Phase 2 — Risk Scoring"
+    checks:
+      - command: "python scripts/run_risk_scoring.py --dry-run"
+        description: "Risk scorer dry-run passes"
+  - name: "Phase 3 — Findings & Publication"
+    checks:
+      - command: "test -f FINDINGS.md"
+        description: "FINDINGS.md exists"
+  - name: "Phase 4 — Publication Artifacts"
+    checks:
+      - command: "test -f blog/draft.md"
+        description: "Blog draft exists"
+      - command: "ls blog/images/*.png | wc -l"
+        description: "≥2 figures exist"
+
+artifacts:
+  run_id_pattern: "{part}_{method}_seed{seed}"
+  per_run_files:
+    - "summary.json"
+    - "scan_report.json"
+  hash_algorithm: "sha256"
+  manifest_file: "outputs/manifest.json"
+
+ai_governance:
+  tools:
+    - name: "Claude Code"
+      role: "Coding copilot, CVE matching, model card parsing"
+      prohibited: "Must not access private model weights or proprietary datasets. Must not make security claims about specific commercial models."
+  anti_ghostwriting: true
+  test_set_barrier: false
