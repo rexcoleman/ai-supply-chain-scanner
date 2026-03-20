@@ -1,3 +1,12 @@
+---
+project: "FINDINGS — AI Supply Chain Security Scanner (FP-10)"
+fp: "—"
+status: COMPLETE
+quality_score: 4.2
+last_scored: 2026-03-20
+profile: blog-track
+---
+
 # FINDINGS — AI Supply Chain Security Scanner (FP-10)
 
 > **Date:** 2026-03-15
