@@ -1,6 +1,6 @@
 # AI Supply Chain Security Scanner
 
-**The Snyk for AI models. Scan ML project dependencies and Hugging Face models for supply chain risks that traditional scanners miss.**
+**65% of ML supply chain findings are CRITICAL severity, and 4 of 7 risk categories are invisible to Snyk and Dependabot. Unsafe pickle/joblib serialization accounts for half of all findings across 5 ML projects.**
 
 > **Note:** This scanner uses rule-based pattern matching and static analysis, not machine learning. It is a security tool FOR AI/ML projects, applying adversarial control analysis to categorize supply chain risks by controllability, but the detection methodology itself is deterministic.
 
