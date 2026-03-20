@@ -55,7 +55,7 @@ Applying controllability analysis (6th domain validation):
 | Model-controlled | 20% | Choose models with safetensors format |
 | Platform-controlled | 5% | Report to Hugging Face |
 
-Unlike crypto migration (FP-03, 70% library-controlled) or fraud detection (FP-04, system-dependent), supply chain risks are mostly in YOUR code. You can fix 75% of them today.
+Unlike crypto migration (70% library-controlled) or fraud detection (system-dependent), supply chain risks are mostly in YOUR code. You can fix 75% of them today.
 
 ![Cross-Domain ACA](images/cross_domain_6.png)
 
@@ -81,7 +81,7 @@ For Hugging Face models: prefer `.safetensors` format over `.bin` or `.pkl`. If 
 
 **The biggest risk is the most boring one.** Model poisoning, adversarial backdoors, training data contamination — these are the exciting supply chain attacks. But `pickle.load` is the one that'll actually get you. It's the SQL injection of ML.
 
-**Governance doesn't cover supply chain.** govML (my governance framework) governs experiment design, data splits, and reproducibility. It doesn't scan dependencies. FP-10 fills that gap — and maybe it should become a govML generator.
+**Governance doesn't cover supply chain.** govML (my governance framework) governs experiment design, data splits, and reproducibility. It doesn't scan dependencies. This project fills that gap — and maybe it should become a govML generator.
 
 **Controllability analysis keeps transferring.** 6 domains now. The principle holds: who controls the input determines what defense is possible.
 
