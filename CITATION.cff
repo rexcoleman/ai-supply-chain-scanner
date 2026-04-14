@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+authors:
+  - family-names: Coleman
+    given-names: Rex
+title: "AI Supply Chain Security Scanner"
+date-released: 2026-04-01
+url: "https://github.com/rexcoleman/ai-supply-chain-scanner"
+repository-code: "https://github.com/rexcoleman/ai-supply-chain-scanner"
+license: MIT
+keywords:
+  - ai-security
+  - supply-chain-security
+  - ml-security
+  - static-analysis

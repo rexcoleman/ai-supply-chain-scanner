@@ -2,6 +2,9 @@
 
 **65% of ML supply chain findings are CRITICAL severity, and 4 of 7 risk categories are invisible to Snyk and Dependabot. Unsafe pickle/joblib serialization accounts for half of all findings across 5 ML projects.**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-green.svg)](https://www.python.org/downloads/)
+
 > **Note:** This scanner uses rule-based pattern matching and static analysis, not machine learning. It is a security tool FOR AI/ML projects, applying adversarial control analysis to categorize supply chain risks by controllability, but the detection methodology itself is deterministic.
 
 ## Key Results
@@ -69,9 +72,27 @@ This project validates the **adversarial controllability analysis** methodology 
 
 See [FINDINGS.md](FINDINGS.md) for detailed results.
 
+## Related Work
+
+- [controllability-bound](https://github.com/rexcoleman/controllability-bound) — Defense difficulty decomposition (this scanner validates the 6th domain)
+- [cycle9-broadcast-contagion](https://github.com/rexcoleman/cycle9-broadcast-contagion) — Phase transitions in supply chain contagion
+- Blog post: [Scanning Agent Skills Results](https://rexcoleman.dev/posts/scanning-agent-skills-results/)
+
 ## Governed by [govML](https://github.com/rexcoleman/govML)
 
 Built with reproducibility and decision traceability enforced across the entire pipeline.
+
+## Citation
+
+```bibtex
+@software{coleman2026supplychain,
+  title = {AI Supply Chain Security Scanner},
+  author = {Coleman, Rex},
+  year = {2026},
+  url = {https://github.com/rexcoleman/ai-supply-chain-scanner},
+  license = {MIT}
+}
+```
 
 ## License
 
