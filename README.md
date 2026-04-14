@@ -1,6 +1,6 @@
-# AI Supply Chain Security Scanner
+# AI Supply Chain Security Scanner: ML Dependency Risk Detection Beyond Snyk and Dependabot
 
-**65% of ML supply chain findings are CRITICAL severity, and 4 of 7 risk categories are invisible to Snyk and Dependabot. Unsafe pickle/joblib serialization accounts for half of all findings across 5 ML projects.**
+**65% of ML supply chain findings are CRITICAL severity, and 4 of 7 risk categories are invisible to Snyk and Dependabot. Unsafe pickle/joblib serialization vulnerability detection accounts for half of all findings across 5 ML projects. A rule-based scanner purpose-built for AI/ML dependency risks.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-green.svg)](https://www.python.org/downloads/)
